@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         // Give the RecyclerView a default layout manager.
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        Log.d("TAG","Create");
     }
 
     @Override
@@ -75,6 +77,23 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            // Get a handle to the RecyclerView.
+            mRecyclerView = findViewById(R.id.recyclerview);
+
+            mWordList.clear();
+
+            for (int i = 0; i < 20; i++) {
+                mWordList.addLast("Word " + i);
+            }
+
+            // Create an adapter and supply the data to be displayed.
+            mAdapter = new WordListAdapter(this, mWordList);
+
+            // Connect the adapter with the RecyclerView.
+            mRecyclerView.setAdapter(mAdapter);
+
+            // Give the RecyclerView a default layout manager.
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
             return true;
         }
 
@@ -82,4 +101,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void resetButton(View view) {
+        onResume();
+//        for (int i = 0; i < 20; i++) {
+//            mWordList.addLast("Word " + i);
+//        }
+//        // Get a handle to the RecyclerView.
+//        mRecyclerView = findViewById(R.id.recyclerview);
+//
+//        // Create an adapter and supply the data to be displayed.
+//        mAdapter = new WordListAdapter(this, mWordList);
+//
+//        // Connect the adapter with the RecyclerView.
+//        mRecyclerView.setAdapter(mAdapter);
+//
+//        // Give the RecyclerView a default layout manager.
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("TAG","Restart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("TAG","Resume");
+    }
 }
